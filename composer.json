@@ -1,0 +1,27 @@
+{
+    "name": "xifan/xcms",
+    "description": "XCMSPHP是一套简洁、安全的PHP Web开发自用框架。",
+    "type": "library",
+    "keywords": [
+        "php Framework",
+        "http service"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Xcms\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "cbw7172002",
+            "email": "175510896@qq.com",
+            "homepage": "https://blog.cqfg.fun",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*"
+    }
+}
