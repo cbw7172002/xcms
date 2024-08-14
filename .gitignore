@@ -2,4 +2,10 @@
 /软著介绍/
 /tests/
 composer.bat
+.gitignore
+composer.lock
+vendor
+vendor/
+.idea
+.idea/
 
