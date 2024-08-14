@@ -7,22 +7,25 @@
 # @微信公众号   : cq_xifan
 # @description : 服务响应类
 
-namespace Xcms\Core;
+namespace support\Http;
 
+use Throwable;
+use function filemtime;
+use function gmdate;
 
 class Response
 {
-
-  protected string $data; // 原始数据
-  protected int $code = 200;  //状态
-  protected array $header = []; // header参数
+  protected $exception = null; // 错误
+  protected $data; // 原始数据
+  protected $code = 200;  //状态
+  protected $header = []; // header参数
 
   /**
    * 直接跳转
    * @param string $url 跳转路径
    * @param int $timeout 延时跳转
    */
-  public static function location(string $url, int $timeout = 0): void
+  public static function location($url, $timeout = 0)
   {
     if (!str_starts_with($url, "http")) {
       $url = Response::getHttpScheme() . Request::getDomain() . $url;
@@ -40,7 +43,7 @@ class Response
    * 获取浏览器的http协议
    * @return string
    */
-  static function getHttpScheme(): string
+  static function getHttpScheme()
   {
     if (
       isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == "https"
@@ -61,7 +64,7 @@ class Response
    * @param string $data 输出数据
    * @return Response
    */
-  public function render(string $data = ''): Response
+  public function render($data = '')
   {
 
     $this->data = $data; //需要渲染的数据
@@ -74,7 +77,7 @@ class Response
    * @param string $charset 编码
    * @return $this
    */
-  public function contentType(string $content_type = 'text/html', string $charset = 'utf-8'): Response
+  public function contentType($content_type = 'text/html', $charset = 'utf-8')
   {
     $this->header['Content-Type'] = $content_type . '; charset=' . $charset;
     return $this;
@@ -84,7 +87,7 @@ class Response
    * 发送HTTP状态
    * @param integer $code 状态码
    */
-  public function code(int $code): Response
+  public function code(int $code)
   {
     $this->code = $code;
     return $this;
@@ -95,7 +98,7 @@ class Response
    * @param $min
    * @return $this
    */
-  public function cache($min): Response
+  public function cache($min)
   {
     $seconds_to_cache = $min * 60;
     $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
@@ -125,7 +128,7 @@ class Response
 
   public function send(): void
   {
-    $addr = Request::getNowAddress();
+    $addr = Request::getAddress();
     $addr = strstr($addr, '?', true) ?: $addr;
     if (preg_match("/.*\.(gif|jpg|jpeg|png|bmp|swf|woff|woff2)?$/", $addr)) {
       $this->cache(60 * 24 * 365);

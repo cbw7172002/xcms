@@ -7,9 +7,12 @@
 # @微信公众号   : cq_xifan
 # @description : 日记记录
 
-namespace Xcms\Core;
+namespace support\Core;
 
-use Xcms\Core\Config;
+
+use RuntimeException;
+use support\Core\Config;
+use support\Core\File;
 
 
 
@@ -17,11 +20,23 @@ class Log
 {
   const TYPE_ERROR = 1;
   const TYPE_WARNING = 2;
+  const TYPE_INFO = 3;
 
   public function __construct($temp)
   {
-    $this->temp = Variables::getLogPath($temp . '.log');
-    File::mkDir(Variables::getLogPath());
+    $runtimeLogsPath = runtime_path() . DIRECTORY_SEPARATOR . 'logs';
+    if (!file_exists($runtimeLogsPath) || !is_dir($runtimeLogsPath)) {
+      if (!mkdir($runtimeLogsPath, 0777, true)) {
+        throw new RuntimeException("Failed to create runtime logs directory. Please check the permission.");
+      }
+    }
+
+    $runtimeViewsPath = runtime_path() . DIRECTORY_SEPARATOR . 'views';
+    if (!file_exists($runtimeViewsPath) || !is_dir($runtimeViewsPath)) {
+      if (!mkdir($runtimeViewsPath, 0777, true)) {
+        throw new RuntimeException("Failed to create runtime views directory. Please check the permission.");
+      }
+    }
   }
 
   public static function record($tag, $msg, $type = self::TYPE_INFO)

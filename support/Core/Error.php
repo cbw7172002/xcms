@@ -17,6 +17,7 @@ class Error
   {
     set_error_handler([__CLASS__, 'appError'], E_ALL);
     set_exception_handler([__CLASS__, 'appException']);
+    register_shutdown_function([__CLASS__, 'appShutdown']);
   }
 
 

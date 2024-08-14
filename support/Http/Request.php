@@ -7,7 +7,7 @@
 # @微信公众号   : cq_xifan
 # @description : 客户端请求处理
 
-namespace Xcms\Http;
+namespace support\Http;
 
 
 
@@ -113,7 +113,15 @@ class Request
   {
     return getHttpScheme() . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
   }
-
+  /**
+   * 当前URL的访问后缀
+   * @param private
+   * @return string
+   */
+  public static function getExt()
+  {
+    return PATHINFO_EXTENSION;
+  }
 
   /**
    * 网络IP

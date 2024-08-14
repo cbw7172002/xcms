@@ -7,14 +7,15 @@
 # @微信公众号   : cq_xifan
 # @description : 单一加载入口
 
-namespace Xcms\Core;
+namespace support\Core;
 
-use Xcms\Core\Config;
-use Xcms\Core\Error;
-use Xcms\Core\Log;
-use Xcms\Core\Engine;
-use Xcms\Http\Request;
-use Xcms\Engine\CliEngine;
+
+use support\Core\Config;
+use support\Core\Error;
+use support\Core\Log;
+use support\Core\Engine;
+use support\Http\Request;
+use support\Engine\CliEngine;
 
 
 use const DIRECTORY_SEPARATOR;
@@ -25,6 +26,8 @@ class App
   public static $cli = false;
   public static $time = [];
 
+  //访问的控制器
+  private static $app = null;
 
   /**
    * Run.
@@ -36,6 +39,10 @@ class App
     if (App::$debug && function_exists("opcache_reset")) {
       opcache_reset(); //OPCACHE_RESET_NONE (默认值)：仅清除用户空间的缓存。OPCACHE_RESET_ALL：清除所有缓存，包括用户空间和系统范围的缓存
     }
+
+
+
+
 
     define("DS", DIRECTORY_SEPARATOR); //定义斜杠符号
     define("APP_CORE", BASE_PATH . DS . 'Core' . DS); //定义程序的核心目录
@@ -52,7 +59,10 @@ class App
     include APP_CORE . "Loader.php"; // 加载自动加载器
     Loader::register(); // 注册自动加载,也可以用composer的自动加载
     self::loadAllConfig();
-
+    // 加载默认区域
+    if ($timezone = Config::get('app.default_timezone', 'Asia/Shanghai')) {
+      date_default_timezone_set($timezone);
+    }
 
 
     try {

@@ -7,7 +7,7 @@
 # @微信公众号   : cq_xifan
 # @description : 助手函数
 
-use Xcms\Core\App;
+use support\Core\Config;
 
 /**
  * 路径拼接
@@ -46,12 +46,39 @@ function startsWith($haystack, $needle)
 {
   return strncmp($haystack, $needle, strlen($needle)) === 0;
 }
+
+/**
+ * Runtime path
+ * @param string $path
+ * @return string
+ */
+function runtime_path($path = '')
+{
+  static $runtimePath = '';
+  if (!$runtimePath) {
+    $runtimePath = Config::get('app.runtime_path', BASE_PATH . DIRECTORY_SEPARATOR . 'runtime');
+  }
+  return path_comb($runtimePath, $path);
+}
+/**
+ * public path
+ * @param string $path
+ * @return string
+ */
+function public_path($path = '')
+{
+  static $publicPath = '';
+  if (!$publicPath) {
+    $publicPath = Config::get('app.public_path', BASE_PATH . DIRECTORY_SEPARATOR . 'public');
+  }
+  return path_comb($publicPath, $path);
+}
 /**
  * 获取静态文件的content-type
  * @param string $filename
  * @return string
  */
-function file_type(string $filename): string
+function file_type($filename)
 {
   $mime_types = array(
     'txt' => 'text/plain',

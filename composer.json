@@ -9,7 +9,10 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Xcms\\": "src"
+            "app\\": "./app",
+            "App\\": "./app",
+            "support\\": "./support",
+            "Support\\": "./support"
         }
     },
     "authors": [

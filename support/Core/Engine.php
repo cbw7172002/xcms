@@ -7,9 +7,9 @@
 # @微信公众号   : cq_xifan
 # @description : 
 
-namespace Xcms\Core;
+namespace support\Core;
 
-use Xcms\Engine\ViewEngine;
+use support\Engine\ViewEngine;
 
 
 class Engine
@@ -17,7 +17,7 @@ class Engine
   protected static $engine = null;
   /**
    * 获取渲染引擎
-   * @return JsonEngine|BaseEngine|ViewEngine|null
+   * @return JsonEngine|CliEngine|ViewEngine|null
    */
   public static function getEngine()
   {
@@ -29,7 +29,7 @@ class Engine
   }
 
   /**
-   * 设置默认引擎
+   * 设置引擎
    * @param $engine BaseEngine
    */
   static function setDefaultEngine($engine)

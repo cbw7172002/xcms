@@ -1,15 +1,15 @@
 <?php
 # -*- coding: utf-8 -*-
-# File ViewEngine
+# File CliEngine
 # Copyright (c) 2023. Xifan. All Rights Reserved.
 # @Date        : 2024/08/14
 # @Author      : 重庆饭哥
 # @微信公众号   : cq_xifan
-# @description : 模板视图引擎引擎
+# @description : 命令视图引擎
 
-namespace Xcms\Engine;
+namespace support\Engine;
 
-class ViewEngine
+class CliEngine
 {
   private $__layout = "";
   private bool $__encode = true;

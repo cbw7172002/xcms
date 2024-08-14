@@ -7,7 +7,7 @@
 # @微信公众号   : cq_xifan
 # @description : 自动加载
 
-namespace Xcms\Core;
+namespace support\Core;
 
 class Loader
 {

@@ -19,13 +19,13 @@ error_reporting(E_ALL);
 try {
   require_once __DIR__ . '/../vendor/autoload.php';
   if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-    exit("[ Xcms ] 环境异常：请使用PHP 7.2 以上版本运行该应用");
+    exit("[ support ] 环境异常：请使用PHP 7.2 以上版本运行该应用");
   }
   ignore_user_abort(true);
   $GLOBALS['__frame_start_time__'] = microtime(true);
   $GLOBALS['__memory_start_size__'] = memory_get_usage();
   define('BASE_PATH', __DIR__);
-  Xcms\Core\App::run();
+  support\Core\App::run();
 } catch (ExitApp $a) {
   // 捕获自定义的 ExitApp 异常
   echo "捕获自定义的 ExitApp 异常: " . $a->getMessage() . "\n" . "<br>";
@@ -60,5 +60,5 @@ try {
   // echo "finally 块，但 die 和 exit 后不会执行 finally.\n";
   // 这里可以添加清理资源的代码，如关闭数据库连接、文件句柄等
   // 也可以记录日志等
-  print_r("<br>--------" . BASE_PATH . "运行结束-------");
+  print_r("<br>--------运行结束-------");
 }
